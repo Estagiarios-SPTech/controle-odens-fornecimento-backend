@@ -10,13 +10,16 @@ public class Employee {
     @JoinColumn(name = "userRoleEmployee", referencedColumnName = "id")
     private User employee;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "userRoleRT", referencedColumnName = "id")
-    private User employeeRT;
+    private User rt;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "userRoleManager", referencedColumnName = "id")
-    private User employeeManager;
+    private User manager;
+
+    private String status;
+
 
     public User getEmployee() {
         return employee;
@@ -26,19 +29,27 @@ public class Employee {
         this.employee = employee;
     }
 
-    public User getEmployeeRT() {
-        return employeeRT;
+    public User getRt() {
+        return rt;
     }
 
-    public void setEmployeeRT(User employeeRT) {
-        this.employeeRT = employeeRT;
+    public void setRt(User rt) {
+        this.rt = rt;
     }
 
-    public User getEmployeeManager() {
-        return employeeManager;
+    public User getManager() {
+        return manager;
     }
 
-    public void setEmployeeManager(User employeeManager) {
-        this.employeeManager = employeeManager;
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

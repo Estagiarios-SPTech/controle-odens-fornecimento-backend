@@ -33,12 +33,12 @@ public class ServiceUser {
         }
     }
 
-    public ResponseEntity<?> findUserById(User obj, Integer id){
+    public ResponseEntity<?> findById(User obj, Integer  id){
         if (obj.getId().describeConstable().isEmpty()){
             System.out.println("Usuário não encontrado");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {                                        // ?????????
-            return new ResponseEntity<>(action.findById(id));
+        } else {
+            return new ResponseEntity<>(action.findById(id), HttpStatus.OK);
         }
     }
 }

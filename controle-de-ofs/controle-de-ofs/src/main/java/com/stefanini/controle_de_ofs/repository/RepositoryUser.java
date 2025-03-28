@@ -13,7 +13,7 @@ public interface RepositoryUser extends CrudRepository<User, Integer> {
 
     List<User> findAll(Integer id);
 
-    @Query(value = "SELECT id, nome FROM user WHERE id = :id")
+    @Query(value = "SELECT id, nome FROM user WHERE id = :id", nativeQuery = true)
     Integer findById();
 
 
