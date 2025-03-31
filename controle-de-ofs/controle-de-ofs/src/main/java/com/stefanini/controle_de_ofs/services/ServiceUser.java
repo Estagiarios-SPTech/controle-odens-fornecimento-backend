@@ -14,7 +14,7 @@ public class ServiceUser {
     @Autowired
     private RepositoryUser action;
 
-    public ResponseEntity<?> findUsers(){
+    public ResponseEntity<?> findAll(){
         return new ResponseEntity<>(action.findAll(), HttpStatus.OK);
     }
 
@@ -41,4 +41,5 @@ public class ServiceUser {
             return new ResponseEntity<>(action.findById(id), HttpStatus.OK);
         }
     }
+
 }

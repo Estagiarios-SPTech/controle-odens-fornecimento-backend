@@ -3,9 +3,12 @@ package com.stefanini.controle_de_ofs.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "employees")
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @OneToOne
     @JoinColumn(name = "userRoleEmployee", referencedColumnName = "id")
     private User employee;

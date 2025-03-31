@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface RepositoryUser extends CrudRepository<User, Integer> {
 
-    List<User> findAll(Integer id);
+    List<User> findAll();
 
-    @Query(value = "SELECT id, nome FROM user WHERE id = :id", nativeQuery = true)
+    @Query(value = "SELECT id, nome FROM users WHERE id = :id", nativeQuery = true)
     Integer findById();
 
 
