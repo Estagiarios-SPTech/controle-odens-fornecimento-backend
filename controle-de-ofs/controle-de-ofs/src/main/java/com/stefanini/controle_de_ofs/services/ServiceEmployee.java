@@ -11,6 +11,8 @@ import java.util.List;
 @Service
 public class ServiceEmployee {
 
+    private String message;
+
     @Autowired
     private RepositoryEmployee action;
 
@@ -21,11 +23,11 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> cadastrar(Employee obj) {
         if (obj.getEmployee() == null) {
-            System.out.println("O colaborador precisa ser informado");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "O colaborador precisa ser informado";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else if (obj.getStatus() == null || obj.getStatus().isEmpty()) {
-            System.out.println("O status precisa ser preenchido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "O status precisa ser preenchido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.CREATED);
         }
@@ -33,8 +35,8 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> findById(int id) {
         if (!action.existsById(id)) {
-            System.out.println("Colaborador não encontrado");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "Colaborador não encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(action.findById(id).get(), HttpStatus.OK);
         }
@@ -44,8 +46,8 @@ public class ServiceEmployee {
     public ResponseEntity<?> findByStatus(String status) {
         List<Employee> employees = action.findByStatus(status);
         if (employees.isEmpty()) {
-            System.out.println("Nenhum colaborador encontrado com o status fornecido");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "Nenhum colaborador encontrado com o status fornecido";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(employees, HttpStatus.OK);
         }
@@ -53,14 +55,14 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> edit(Employee obj) {
         if (action.findById(obj.getId()).isEmpty()) {
-            System.out.println("ID do colaborador não encontrado");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "ID do colaborador não encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else if (obj.getEmployee() == null) {
-            System.out.println("O colaborador precisa ser informado");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "O colaborador precisa ser informado";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else if (obj.getStatus() == null || obj.getStatus().isEmpty()) {
-            System.out.println("O status precisa ser preenchido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "O status precisa ser preenchido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.OK);
         }
@@ -68,8 +70,8 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> deleteById(int id) {
         if (!action.existsById(id)) {
-            System.out.println("Colaborador não encontrado");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "Colaborador não encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
             action.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);

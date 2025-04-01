@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class ServiceUser {
+    private String message;
 
     @Autowired
     private RepositoryUser action;
@@ -22,14 +23,14 @@ public class ServiceUser {
 
     public ResponseEntity<?> cadastrar(User obj){
         if(obj.getName().isEmpty()){
-            System.out.println("O nome precisa ser preenchido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "O nome precisa ser preenchido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else if (obj.getEmail().isEmpty()) {
-            System.out.println("Informe um endereço de e-mail válido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "Informe um endereço de e-mail válido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else if (obj.getRole().isEmpty()) {
-            System.out.println("Informe um cargo válido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "Informe um cargo válido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.CREATED);
         }
@@ -37,8 +38,8 @@ public class ServiceUser {
 
     public ResponseEntity<?> findById(int  id){
         if (action.countById(id) == 0){
-            System.out.println("Usuário não encontrado");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "Usuário não encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(action.findById(id), HttpStatus.OK);
         }
@@ -46,17 +47,17 @@ public class ServiceUser {
 
     public ResponseEntity<?> edit(User obj){
         if (action.countById(obj.getId()) == 0){
-            System.out.println("ID do Usuário não encontrado");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "ID do Usuário não encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else if(obj.getName().isEmpty()){
-            System.out.println("O nome precisa ser preenchido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "O nome precisa ser preenchido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else if (obj.getEmail().isEmpty()) {
-            System.out.println("Informe um endereço de e-mail válido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "Informe um endereço de e-mail válido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else if (obj.getRole().isEmpty()) {
-            System.out.println("Informe um cargo válido");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            message = "Informe um cargo válido";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.OK);
         }
@@ -64,8 +65,8 @@ public class ServiceUser {
 
     public ResponseEntity<?> deleteById(int id) {
         if (action.countById(id) == 0) {
-            System.out.println("Usuário não encontrado");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            message = "Usuário não encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
             List<User> obj = action.findById(id);
             if (!obj.isEmpty()) {
@@ -77,14 +78,6 @@ public class ServiceUser {
             }
         }
     }
-//    public ResponseEntity<?> deleteById(int id) {
-//        if (action.countById(id) == 0) {
-//            System.out.println("Usuário não encontrado");
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } else {
-//            action.deleteById(id);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
-//    }
+
 
 }
