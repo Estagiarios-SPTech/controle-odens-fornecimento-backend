@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @Tag(name = "Usuários")
 @RestController
+@RequestMapping("/users")
 public class UserController {
     private RepositoryUser action;
 
@@ -18,32 +19,32 @@ public class UserController {
     private ServiceUser serviceUser;
 
     @Operation(summary = "Rota para listar todos os usuários")
-    @GetMapping("/users/findAll")
+    @GetMapping("/findAll")
     public ResponseEntity<?> select(){
         return serviceUser.findAll();
     }
 
     @Operation(summary = "Rota para listar todos os usuários pelo ID")
-    @GetMapping("/users/findByID/{id}")
+    @GetMapping("/findByID/{id}")
     public ResponseEntity<?> selectID(@PathVariable int id) {
         return serviceUser.findById(id);
     }
 
     @Operation(summary = "Rota para adicionar usuários")
-    @PostMapping("/users/new")
+    @PostMapping("/new")
     public ResponseEntity<?> cadastrar(@RequestBody User obj){
         return serviceUser.cadastrar(obj);
     }
 
     @Operation(summary = "Rota para editar usuários")
-    @PutMapping("/users/edit")
+    @PutMapping("/edit")
     public ResponseEntity<?> edit(@RequestBody User obj){
         return serviceUser.edit(obj);
     }
 
     @Operation(summary = "Rota para deletar usuários")
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable int id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteByID(@PathVariable int id){
         return serviceUser.deleteById(id);
   }
 }

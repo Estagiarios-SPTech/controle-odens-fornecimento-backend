@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "userRoleEmployee", referencedColumnName = "id")
@@ -23,6 +23,14 @@ public class Employee {
 
     private String status;
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public User getEmployee() {
         return employee;

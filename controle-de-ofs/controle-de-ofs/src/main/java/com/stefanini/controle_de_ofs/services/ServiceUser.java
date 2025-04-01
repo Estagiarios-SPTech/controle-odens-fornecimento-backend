@@ -62,15 +62,29 @@ public class ServiceUser {
         }
     }
 
-    public ResponseEntity<?> deleteById(int  id){
-        if (action.countById(id) == 0){
+    public ResponseEntity<?> deleteById(int id) {
+        if (action.countById(id) == 0) {
             System.out.println("Usuário não encontrado");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             List<User> obj = action.findById(id);
-            action.delete((User) obj);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if (!obj.isEmpty()) {
+                User user = obj.get(0);;
+                action.delete(user);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         }
     }
+//    public ResponseEntity<?> deleteById(int id) {
+//        if (action.countById(id) == 0) {
+//            System.out.println("Usuário não encontrado");
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } else {
+//            action.deleteById(id);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//    }
 
 }
