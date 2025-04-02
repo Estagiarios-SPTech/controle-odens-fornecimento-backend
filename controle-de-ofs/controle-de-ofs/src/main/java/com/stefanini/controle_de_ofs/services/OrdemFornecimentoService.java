@@ -1,8 +1,7 @@
 package com.stefanini.controle_de_ofs.services;
 
 import com.stefanini.controle_de_ofs.models.OrdemFornecimento;
-import com.stefanini.controle_de_ofs.repository.Repositorio;
-import org.aspectj.weaver.ast.Or;
+import com.stefanini.controle_de_ofs.repository.RepositoryOrdemFornecimento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ public class OrdemFornecimentoService {
     private String message;
 
     @Autowired
-    private Repositorio acao;
+    private RepositoryOrdemFornecimento acao;
 
     public ResponseEntity<?> cadastrar(OrdemFornecimento obj){
         if(obj.getDescription() == "" ||
@@ -30,7 +29,7 @@ public class OrdemFornecimentoService {
     }
 
     public ResponseEntity<?> listarTudo(){
-        return new ResponseEntity<>(acao.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(acao.acharTudoSemMandarObjetoChaveEstrangeira(), HttpStatus.OK);
     }
 
     public ResponseEntity<?> listarPorCodigo(Integer codigo){
