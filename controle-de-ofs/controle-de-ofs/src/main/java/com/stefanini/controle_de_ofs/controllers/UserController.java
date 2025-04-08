@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Usuários")
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*")
+
 public class UserController {
     private RepositoryUser action;
 
@@ -47,4 +49,15 @@ public class UserController {
     public ResponseEntity<?> deleteByID(@PathVariable int id){
         return serviceUser.deleteById(id);
   }
+
+    @Operation(summary = "Rota para encontrar todos os gerentes")
+    @GetMapping("/Managers")
+    public ResponseEntity<?> findManager(String role){
+        return serviceUser.findByRole("manager");
+    }
+    @Operation(summary = "Rota para encontrar todos os rts")
+    @GetMapping("/RTs")
+    public ResponseEntity<?> findRts(String role){
+        return serviceUser.findByRole("rt");
+    }
 }

@@ -18,5 +18,9 @@ public interface RepositoryUser extends CrudRepository<User, Integer> {
 
     int countById(int codigo);
 
+    List <User> findByRole(String role);
+
+    @Query(value = "SELECT id, name, email, role FROM users WHERE role = 'manager'", nativeQuery = true)
+    List <User> findManagers();
 }
 
