@@ -4,7 +4,6 @@ import com.stefanini.controle_de_ofs.models.User;
 import com.stefanini.controle_de_ofs.repository.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,10 @@ public class ServiceUser {
 
     @Autowired
     private RepositoryUser action;
+
+    public List<String> listarNomes(){
+        return action.findAllName();
+    }
 
     public ResponseEntity<?> findAll(){
         return new ResponseEntity<>(action.findAll(), HttpStatus.OK);

@@ -18,5 +18,9 @@ public interface RepositoryUser extends CrudRepository<User, Integer> {
 
     int countById(int codigo);
 
+    @Query(value = "select name from users", nativeQuery = true)
+    List<String> findAllName();
+
+    User findByName(String name);
 }
 

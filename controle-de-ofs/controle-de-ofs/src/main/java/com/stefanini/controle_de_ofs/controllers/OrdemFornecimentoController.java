@@ -1,6 +1,7 @@
 package com.stefanini.controle_de_ofs.controllers;
 
 import com.stefanini.controle_de_ofs.models.OrdemFornecimento;
+import com.stefanini.controle_de_ofs.repository.RepositoryOrdemFornecimento;
 import com.stefanini.controle_de_ofs.services.OrdemFornecimentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class OrdemFornecimentoController {
     @Autowired
     private OrdemFornecimentoService ordemFornecimentoService;
+
+    @Autowired
+    private RepositoryOrdemFornecimento acao;
+
 
     @Operation(summary = "Cadastro")
     @PostMapping("/criar")

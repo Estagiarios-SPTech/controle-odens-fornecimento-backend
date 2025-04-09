@@ -1,22 +1,27 @@
 package com.stefanini.controle_de_ofs.controllers;
 
-import com.jayway.jsonpath.internal.path.ArraySliceOperation;
 import com.stefanini.controle_de_ofs.models.User;
-import com.stefanini.controle_de_ofs.repository.RepositoryUser;
 import com.stefanini.controle_de_ofs.services.ServiceUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@CrossOrigin(origins = "*")
 @Tag(name = "Usuários")
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private RepositoryUser action;
-
     @Autowired
     private ServiceUser serviceUser;
+
+    @GetMapping("/listarNomes")
+    public List<String> listarNomes(){
+        return serviceUser.listarNomes();
+    }
 
     @Operation(summary = "Rota para listar todos os usuários")
     @GetMapping("/findAll")
