@@ -2,6 +2,8 @@ package com.stefanini.controle_de_ofs.services;
 
 import com.stefanini.controle_de_ofs.models.Employee;
 import com.stefanini.controle_de_ofs.repository.RepositoryEmployee;
+import com.stefanini.controle_de_ofs.repository.RepositoryUser;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ public class ServiceEmployee {
     @Autowired
     private RepositoryEmployee action;
 
+    @Autowired
+    private RepositoryUser actionUser;
+
     public ResponseEntity<?> findAll(){
         return new ResponseEntity<>(action.findAll(), HttpStatus.OK);
     }
@@ -29,9 +34,12 @@ public class ServiceEmployee {
             message = "O status precisa ser preenchido";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         } else {
+            obj.setRt(actionUser.findSpecificRT(obj.getRt().getName()));
+            obj.setManager(actionUser.findSpecificManager(obj.getManager().getName()));
             return new ResponseEntity<>(action.save(obj), HttpStatus.CREATED);
         }
     }
+
 
     public ResponseEntity<?> findById(int id) {
         if (!action.existsById(id)) {

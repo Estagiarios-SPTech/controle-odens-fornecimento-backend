@@ -1,7 +1,9 @@
 package com.stefanini.controle_de_ofs.controllers;
 
 import com.stefanini.controle_de_ofs.models.Employee;
+import com.stefanini.controle_de_ofs.models.User;
 import com.stefanini.controle_de_ofs.repository.RepositoryEmployee;
+import com.stefanini.controle_de_ofs.repository.RepositoryUser;
 import com.stefanini.controle_de_ofs.services.ServiceEmployee;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,4 +59,5 @@ public class EmployeeController {
     public ResponseEntity<?> deleteById(@PathVariable int id) {
         return serviceEmployee.deleteById(id);
     }
+
 }

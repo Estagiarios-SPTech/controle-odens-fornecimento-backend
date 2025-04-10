@@ -22,5 +22,11 @@ public interface RepositoryUser extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT id, name, email, role FROM users WHERE role = 'manager'", nativeQuery = true)
     List <User> findManagers();
+
+    @Query(value = "SELECT id, name, email, role FROM users WHERE role = 'manager' AND name = :name", nativeQuery = true)
+    User findSpecificManager(String name);
+
+    @Query(value = "SELECT id, name, email, role FROM users WHERE role = 'RT' AND name = :name", nativeQuery = true)
+    User findSpecificRT(String name);
 }
 

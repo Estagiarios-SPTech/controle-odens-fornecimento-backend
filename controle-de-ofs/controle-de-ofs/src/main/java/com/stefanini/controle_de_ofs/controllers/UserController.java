@@ -55,6 +55,7 @@ public class UserController {
     public ResponseEntity<?> findManager(String role){
         return serviceUser.findByRole("manager");
     }
+
     @Operation(summary = "Rota para encontrar todos os rts")
     @GetMapping("/RTs")
     public ResponseEntity<?> findRts(String role){
