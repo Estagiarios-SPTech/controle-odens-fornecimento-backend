@@ -48,6 +48,15 @@ public class ServiceUser {
         }
     }
 
+    public ResponseEntity<?> findByRole(String role){
+        if (action.findByRole(role).isEmpty()){
+            message = "É necessário inserir um cargo";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(action.findByRole(role), HttpStatus.OK);
+        }
+    }
+
     public ResponseEntity<?> edit(User obj){
         if (action.countById(obj.getId()) == 0){
             message = "ID do Usuário não encontrado";
@@ -81,6 +90,17 @@ public class ServiceUser {
             }
         }
     }
+
+    public ResponseEntity<?> findAllManagers(){
+        if (action.findManagers().isEmpty()){
+            message = "Nenhum gerente encontrado";
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(action.findManagers(), HttpStatus.OK);
+        }
+    }
+
+
 
 
 }
