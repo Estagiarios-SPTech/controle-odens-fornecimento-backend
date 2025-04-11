@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Employees")
 @RequestMapping("/employees")
 @RestController
+@CrossOrigin(origins = "*")
 public class EmployeeController {
 
     @Autowired
