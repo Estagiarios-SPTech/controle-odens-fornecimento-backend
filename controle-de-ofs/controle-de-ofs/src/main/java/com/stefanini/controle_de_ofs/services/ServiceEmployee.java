@@ -1,6 +1,7 @@
 package com.stefanini.controle_de_ofs.services;
 
 import com.stefanini.controle_de_ofs.models.Employee;
+import com.stefanini.controle_de_ofs.models.Mensagem;
 import com.stefanini.controle_de_ofs.repository.RepositoryEmployee;
 import com.stefanini.controle_de_ofs.repository.RepositoryUser;
 import org.apache.catalina.User;
@@ -21,6 +22,9 @@ public class ServiceEmployee {
     @Autowired
     private RepositoryUser actionUser;
 
+    @Autowired
+    private Mensagem mensagem;
+
     public ResponseEntity<?> findAll(){
         return new ResponseEntity<>(action.findAll(), HttpStatus.OK);
     }
@@ -28,11 +32,11 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> cadastrar(Employee obj) {
         if (obj.getEmployee() == null) {
-            message = "O colaborador precisa ser informado";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("O colaborador precisa ser informado");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else if (obj.getStatus() == null || obj.getStatus().isEmpty()) {
-            message = "O status precisa ser preenchido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("O status precisa ser preenchido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else {
             obj.setRt(actionUser.findSpecificRT(obj.getRt().getName()));
             obj.setManager(actionUser.findSpecificManager(obj.getManager().getName()));
@@ -43,8 +47,8 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> findById(int id) {
         if (!action.existsById(id)) {
-            message = "Colaborador não encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("Colaborador não encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(action.findById(id).get(), HttpStatus.OK);
         }
@@ -54,8 +58,8 @@ public class ServiceEmployee {
     public ResponseEntity<?> findByStatus(String status) {
         List<Employee> employees = action.findByStatus(status);
         if (employees.isEmpty()) {
-            message = "Nenhum colaborador encontrado com o status fornecido";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("Nenhum colaborador encontrado com o status fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(employees, HttpStatus.OK);
         }
@@ -63,14 +67,14 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> edit(Employee obj) {
         if (action.findById(obj.getId()).isEmpty()) {
-            message = "ID do colaborador não encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("ID do colaborador não encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else if (obj.getEmployee() == null) {
-            message = "O colaborador precisa ser informado";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("O colaborador precisa ser informado");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else if (obj.getStatus() == null || obj.getStatus().isEmpty()) {
-            message = "O status precisa ser preenchido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("O status precisa ser preenchido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.OK);
         }
@@ -78,8 +82,8 @@ public class ServiceEmployee {
 
     public ResponseEntity<?> deleteById(int id) {
         if (!action.existsById(id)) {
-            message = "Colaborador não encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("Colaborador não encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             action.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);

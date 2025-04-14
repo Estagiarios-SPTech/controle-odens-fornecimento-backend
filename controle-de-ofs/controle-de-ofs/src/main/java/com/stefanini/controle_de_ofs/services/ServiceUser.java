@@ -1,5 +1,6 @@
 package com.stefanini.controle_de_ofs.services;
 
+import com.stefanini.controle_de_ofs.models.Mensagem;
 import com.stefanini.controle_de_ofs.models.User;
 import com.stefanini.controle_de_ofs.repository.RepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ServiceUser {
     @Autowired
     private RepositoryUser action;
 
+    @Autowired
+    private Mensagem mensagem;
+
     public List<String> listarNomes(){
         return action.findAllName();
     }
@@ -26,14 +30,14 @@ public class ServiceUser {
 
     public ResponseEntity<?> cadastrar(User obj){
         if(obj.getName().isEmpty()){
-            message = "O nome precisa ser preenchido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("O nome precisa ser preenchido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else if (obj.getEmail().isEmpty()) {
-            message = "Informe um endereço de e-mail válido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("Informe um endereço de e-mail válido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else if (obj.getRole().isEmpty()) {
-            message = "Informe um cargo válido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("Informe um cargo válido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.CREATED);
         }
@@ -41,8 +45,8 @@ public class ServiceUser {
 
     public ResponseEntity<?> findById(int  id){
         if (action.countById(id) == 0){
-            message = "Usuário não encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("Usuário não encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(action.findById(id), HttpStatus.OK);
         }
@@ -50,8 +54,8 @@ public class ServiceUser {
 
     public ResponseEntity<?> findByRole(String role){
         if (action.findByRole(role).isEmpty()){
-            message = "É necessário inserir um cargo";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("É necessário inserir um cargo");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(action.findByRole(role), HttpStatus.OK);
         }
@@ -59,17 +63,17 @@ public class ServiceUser {
 
     public ResponseEntity<?> edit(User obj){
         if (action.countById(obj.getId()) == 0){
-            message = "ID do Usuário não encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("ID do Usuário não encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else if(obj.getName().isEmpty()){
-            message = "O nome precisa ser preenchido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("O nome precisa ser preenchido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else if (obj.getEmail().isEmpty()) {
-            message = "Informe um endereço de e-mail válido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("Informe um endereço de e-mail válido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else if (obj.getRole().isEmpty()) {
-            message = "Informe um cargo válido";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            mensagem.setMessage("Informe um cargo válido");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(action.save(obj), HttpStatus.OK);
         }
@@ -77,8 +81,8 @@ public class ServiceUser {
 
     public ResponseEntity<?> deleteById(int id) {
         if (action.countById(id) == 0) {
-            message = "Usuário não encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("Usuário não encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             List<User> obj = action.findById(id);
             if (!obj.isEmpty()) {
@@ -93,8 +97,8 @@ public class ServiceUser {
 
     public ResponseEntity<?> findAllManagers(){
         if (action.findManagers().isEmpty()){
-            message = "Nenhum gerente encontrado";
-            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            mensagem.setMessage("Nenhum gerente encontrado");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(action.findManagers(), HttpStatus.OK);
         }
