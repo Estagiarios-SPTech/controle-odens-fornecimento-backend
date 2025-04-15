@@ -1,7 +1,6 @@
 package com.stefanini.controle_de_ofs.controllers;
 
 import com.stefanini.controle_de_ofs.models.OrdemFornecimento;
-import com.stefanini.controle_de_ofs.repository.RepositoryOrdemFornecimento;
 import com.stefanini.controle_de_ofs.services.OrdemFornecimentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,9 +16,10 @@ public class OrdemFornecimentoController {
     @Autowired
     private OrdemFornecimentoService ordemFornecimentoService;
 
-    @Autowired
-    private RepositoryOrdemFornecimento acao;
-
+    @GetMapping("/quantidadePorMes")
+    public ResponseEntity<?> listarPorMes(){
+        return ordemFornecimentoService.listarPorMes();
+    }
 
     @Operation(summary = "Cadastro")
     @PostMapping("/criar")
@@ -34,9 +34,14 @@ public class OrdemFornecimentoController {
     }
 
     @Operation(summary = "Listagem por código")
-    @GetMapping("/listar/{codigo}")
+    @GetMapping("/listarPorCodigo/{codigo}")
     public ResponseEntity<?> listarPorId(@PathVariable Integer codigo){
         return ordemFornecimentoService.listarPorCodigo(codigo);
+    }
+
+    @GetMapping("/contarPorStatus/{status}")
+    public ResponseEntity<?> ContarPorStatus(@PathVariable String status){
+        return ordemFornecimentoService.ContarPorStatus(status);
     }
 
     @Operation(summary = "Alteração")
