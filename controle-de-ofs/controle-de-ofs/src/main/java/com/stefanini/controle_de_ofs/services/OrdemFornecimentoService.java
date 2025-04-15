@@ -47,6 +47,14 @@ public class OrdemFornecimentoService {
         return new ResponseEntity<>(acao.acharTudoSemMandarObjetoChaveEstrangeira(), HttpStatus.OK);
     }
 
+    public ResponseEntity<?> ContarPorStatus(String status){
+        return new ResponseEntity<>(acao.findByStatus(status).size(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> listarPorMes(){
+        return new ResponseEntity<>(acao.listarPorMes(), HttpStatus.OK);
+    }
+
     public ResponseEntity<?> listarPorCodigo(Integer codigo){
         if(acao.countByCodigo(codigo) == 0){
             mensagem.setMessage("Código não encontrado");
